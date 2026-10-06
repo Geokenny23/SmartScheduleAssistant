@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../../store/AppContext.tsx';
 import { STORE_NAME, PS_NAME, AS_NAME } from '../../data/seed.ts';
 
 export const TopBar: React.FC = () => {
   const { state, setRole, toggleTheme, resetState } = useApp();
+  const navigate = useNavigate();
   const isPS = state.role === 'PS';
 
   return (
@@ -35,7 +37,10 @@ export const TopBar: React.FC = () => {
         >
           <button
             type="button"
-            onClick={() => setRole('PS')}
+            onClick={() => {
+              setRole('PS');
+              navigate('/ps');
+            }}
             style={{
               padding: '4px 12px',
               fontSize: '12px',
@@ -52,7 +57,10 @@ export const TopBar: React.FC = () => {
           </button>
           <button
             type="button"
-            onClick={() => setRole('AS')}
+            onClick={() => {
+              setRole('AS');
+              navigate('/as');
+            }}
             style={{
               padding: '4px 12px',
               fontSize: '12px',

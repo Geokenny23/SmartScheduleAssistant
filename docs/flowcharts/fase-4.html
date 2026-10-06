@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Fase 4: Peninjauan & Persetujuan (Area Supervisor)</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .card {
+      background: #ffffff;
+      padding: 24px 32px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+  </style>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'neutral',
+      flowchart: { curve: 'basis', nodeSpacing: 35, rankSpacing: 35 }
+    });
+  </script>
+</head>
+<body>
+  <div class="card">
+    <div class="mermaid">
+flowchart TD
+    classDef psNode fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
+    classDef asNode fill:#ecfdf5,stroke:#059669,stroke-width:2px,color:#047857;
+    classDef decisionNode fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#b45309;
+    classDef dangerNode fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#b91c1c;
+
+    subgraph S4["Fase 4: Peninjauan & Persetujuan (Area Supervisor)"]
+        C7["Pengajuan dari Fase 3"]:::psNode --> D1["Notifikasi Masuk ke Inbox AS"]:::asNode
+        D1 --> D2["AS Meninjau Jadwal Toko:\n• Matriks Roster Mingguan\n• Catatan Operasional & Justifikasi PS\n• Permintaan Bantuan Lintas Toko"]:::asNode
+        D2 --> D3{"Keputusan AS"}:::decisionNode
+        
+        D3 -- "Ditolak / Perlu Revisi" --> D4["Beri Catatan Perbaikan\n(Jadwal kembali ke Draf PS)"]:::dangerNode
+        D3 -- "Disetujui" --> D5["Jadwal Resmi Disetujui\n(Status: Approved)"]:::asNode
+    end
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Fase 2: Assistant Generation & Validasi</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .card {
+      background: #ffffff;
+      padding: 24px 32px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+  </style>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'neutral',
+      flowchart: { curve: 'basis', nodeSpacing: 35, rankSpacing: 35 }
+    });
+  </script>
+</head>
+<body>
+  <div class="card">
+    <div class="mermaid">
+flowchart TD
+    classDef psNode fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
+    classDef engineNode fill:#f3e8ff,stroke:#7c3aed,stroke-width:2px,color:#5b21b6;
+
+    subgraph S2["Fase 2: Assistant Generation & Validasi"]
+        A4["Input dari Fase 1"]:::psNode --> B1["Smart Generator Engine\n(Multi-attempt Constraint Solver)"]:::engineNode
+        B1 --> B2["Cek 11 Aturan Kepatuhan:\n• Min 1 Pria per shift\n• CIF & SSL pisah shift\n• Rantai PK II ➔ I\n• Kuota Libur Kontrak"]:::engineNode
+        B2 --> B3["Tampilkan Draf Jadwal di Workspace\n+ Ringkasan Metrik & Peringatan"]:::engineNode
+    end
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Fase 1: Persiapan & Input Data</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .card {
+      background: #ffffff;
+      padding: 24px 32px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+  </style>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'neutral',
+      flowchart: { curve: 'basis', nodeSpacing: 35, rankSpacing: 35 }
+    });
+  </script>
+</head>
+<body>
+  <div class="card">
+    <div class="mermaid">
+flowchart TD
+    classDef psNode fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
+
+    subgraph S1["Fase 1: Persiapan & Input Data (Pimpinan Shift)"]
+        A1["Mulai Penyusunan Jadwal Mingguan"]:::psNode --> A2["Tinjau Kebutuhan Toko\n(Target Headcount, Hari Ramai, Jam Buka)"]:::psNode
+        A2 --> A3["Tinjau Data Staf & Cuti\n(Kontrak Hari Kerja, Cuti yang Disetujui, Estafet PK)"]:::psNode
+        A3 --> A4["Klik: Susun Usulan Jadwal Otomatis"]:::psNode
+    end
+    </div>
+  </div>
+</body>
+</html>

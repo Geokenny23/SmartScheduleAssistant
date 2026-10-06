@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Schedule Assistant - User Flow Diagrams</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 30px;
+      background: #ffffff;
+      color: #1e293b;
+    }
+    .chart-container {
+      margin-bottom: 60px;
+      padding: 24px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      max-width: 820px;
+    }
+    h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 18px;
+      color: #0f172a;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 8px;
+    }
+  </style>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'neutral',
+      flowchart: {
+        curve: 'basis',
+        nodeSpacing: 50,
+        rankSpacing: 40,
+        padding: 15
+      }
+    });
+  </script>
+</head>
+<body>
+
+  <!-- FASE 1 -->
+  <div id="chart-fase-1" class="chart-container">
+    <h2>Fase 1: Persiapan & Input Data (Pimpinan Shift)</h2>
+    <div class="mermaid">
+flowchart TD
+    classDef psNode fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
+
+    subgraph S1["Fase 1: Persiapan & Input Data (Pimpinan Shift)"]
+        A1["Mulai Penyusunan Jadwal Mingguan"]:::psNode --> A2["Tinjau Kebutuhan Toko\n(Target Headcount, Hari Ramai, Jam Buka)"]:::psNode
+        A2 --> A3["Tinjau Data Staf & Cuti\n(Kontrak Hari Kerja, Cuti yang Disetujui, Estafet PK)"]:::psNode
+        A3 --> A4["Klik: Susun Usulan Jadwal Otomatis"]:::psNode
+    end
+    </div>
+  </div>
+
+  <!-- FASE 2 -->
+  <div id="chart-fase-2" class="chart-container">
+    <h2>Fase 2: Assistant Generation & Validasi</h2>
+    <div class="mermaid">
+flowchart TD
+    classDef psNode fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
+    classDef engineNode fill:#f3e8ff,stroke:#7c3aed,stroke-width:2px,color:#5b21b6;
+
+    subgraph S2["Fase 2: Assistant Generation & Validasi"]
+        A4["Input dari Fase 1"]:::psNode --> B1["Smart Generator Engine\n(Multi-attempt Constraint Solver)"]:::engineNode
+        B1 --> B2["Cek 11 Aturan Kepatuhan:\n• Min 1 Pria per shift\n• CIF & SSL pisah shift\n• Rantai PK II ➔ I\n• Kuota Libur Kontrak"]:::engineNode
+        B2 --> B3["Tampilkan Draf Jadwal di Workspace\n+ Ringkasan Metrik & Peringatan"]:::engineNode
+    end
+    </div>
+  </div>
+
+  <!-- FASE 3 -->
+  <div id="chart-fase-3" class="chart-container">
+    <h2>Fase 3: Ruang Kerja & Keputusan PS</h2>
+    <div class="mermaid">
+flowchart TD
+    classDef psNode fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
+    classDef engineNode fill:#f3e8ff,stroke:#7c3aed,stroke-width:2px,color:#5b21b6;
+    classDef decisionNode fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#b45309;
+
+    subgraph S3["Fase 3: Ruang Kerja & Keputusan PS"]
+        B3["Draf Jadwal dari Fase 2"]:::engineNode --> C1{"Apakah Perlu\nPenyesuaian?"}:::decisionNode
+        
+        C1 -- "Ya, Ada Kendala/Absen" --> C2["Tindakan Penyesuaian PS:"]:::psNode
+        C2 --> C2A["Tukar Shift dengan Rekan\n(Smart Swap: Headcount Terjaga)"]:::psNode
+        C2 --> C2B["Tukar Peran Harian\n(Kasir ⇄ Pramuniaga)"]:::psNode
+        C2 --> C2C["Tandai Izin/Sakit Mendadak\n(Rekomendasi Pengganti / Bantuan Toko Lain)"]:::psNode
+        
+        C2A --> C3["Validasi Ulang Otomatis"]:::engineNode
+        C2B --> C3
+        C2C --> C3
+        
+        C3 --> C4{"Terdapat Pelanggaran\nAturan / Kekurangan?"}:::decisionNode
+        C4 -- "Ada Deviasi Operasional" --> C5["Klik: Jadikan Catatan Operasional\n(Sistem Merangkum Alasan Deviasi)"]:::psNode
+        C4 -- "Semua Aturan Lolos" --> C6["Draf Siap Diajukan"]:::psNode
+        C5 --> C6
+        
+        C1 -- "Tidak, Hasil Cocok" --> C6
+        C6 --> C7["Halaman Konfirmasi & Kirim ke AS\n(Periksa Draf Catatan Operasional)"]:::psNode
+    end
+    </div>
+  </div>
+
+  <!-- FASE 4 -->
+  <div id="chart-fase-4" class="chart-container">
+    <h2>Fase 4: Peninjauan & Persetujuan (Area Supervisor)</h2>
+    <div class="mermaid">
+flowchart TD
+    classDef psNode fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
+    classDef asNode fill:#ecfdf5,stroke:#059669,stroke-width:2px,color:#047857;
+    classDef decisionNode fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#b45309;
+    classDef dangerNode fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#b91c1c;
+
+    subgraph S4["Fase 4: Peninjauan & Persetujuan (Area Supervisor)"]
+        C7["Pengajuan dari Fase 3"]:::psNode --> D1["Notifikasi Masuk ke Inbox AS"]:::asNode
+        D1 --> D2["AS Meninjau Jadwal Toko:\n• Matriks Roster Mingguan\n• Catatan Operasional & Justifikasi PS\n• Permintaan Bantuan Lintas Toko"]:::asNode
+        D2 --> D3{"Keputusan AS"}:::decisionNode
+        
+        D3 -- "Ditolak / Perlu Revisi" --> D4["Beri Catatan Perbaikan\n(Jadwal kembali ke Draf PS)"]:::dangerNode
+        D3 -- "Disetujui" --> D5["Jadwal Resmi Disetujui\n(Status: Approved)"]:::asNode
+    end
+    </div>
+  </div>
+
+  <!-- FASE 5 -->
+  <div id="chart-fase-5" class="chart-container">
+    <h2>Fase 5: Operasional Berjalan & Perubahan Darurat</h2>
+    <div class="mermaid">
+flowchart TD
+    classDef psNode fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
+    classDef asNode fill:#ecfdf5,stroke:#059669,stroke-width:2px,color:#047857;
+    classDef decisionNode fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#b45309;
+
+    subgraph S5["Fase 5: Operasional Berjalan & Perubahan Darurat"]
+        D5["Jadwal Disetujui (Fase 4)"]:::asNode --> E1["Jadwal Aktif Berjalan di Toko"]:::asNode
+        E1 --> E2{"Ada Ketidakhadiran\nMendadak di Hari-H?"}:::decisionNode
+        E2 -- "Ya" --> E3["PS Mengaktifkan:\nMode Ajukan Perubahan Jadwal"]:::psNode
+        E3 --> E4["Penyesuaian Terisolasi\n(Delta Tracking + Rekomendasi Pengganti)"]:::psNode
+        E4 --> E5["Kirim Perubahan Khusus ke AS"]:::psNode
+        E2 -- "Tidak" --> E6["Operasional Selesai Normal"]:::asNode
+    end
+    </div>
+  </div>
+
+</body>
+</html>

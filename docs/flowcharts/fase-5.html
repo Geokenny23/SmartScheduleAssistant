@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Fase 5: Operasional Berjalan & Perubahan Darurat</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .card {
+      background: #ffffff;
+      padding: 24px 32px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+  </style>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'neutral',
+      flowchart: { curve: 'basis', nodeSpacing: 35, rankSpacing: 35 }
+    });
+  </script>
+</head>
+<body>
+  <div class="card">
+    <div class="mermaid">
+flowchart TD
+    classDef psNode fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
+    classDef asNode fill:#ecfdf5,stroke:#059669,stroke-width:2px,color:#047857;
+    classDef decisionNode fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#b45309;
+
+    subgraph S5["Fase 5: Operasional Berjalan & Perubahan Darurat"]
+        D5["Jadwal Disetujui (Fase 4)"]:::asNode --> E1["Jadwal Aktif Berjalan di Toko"]:::asNode
+        E1 --> E2{"Ada Ketidakhadiran\nMendadak di Hari-H?"}:::decisionNode
+        E2 -- "Ya" --> E3["PS Mengaktifkan:\nMode Ajukan Perubahan Jadwal"]:::psNode
+        E3 --> E4["Penyesuaian Terisolasi\n(Delta Tracking + Rekomendasi Pengganti)"]:::psNode
+        E4 --> E5["Kirim Perubahan Khusus ke AS"]:::psNode
+        E2 -- "Tidak" --> E6["Operasional Selesai Normal"]:::asNode
+    end
+    </div>
+  </div>
+</body>
+</html>

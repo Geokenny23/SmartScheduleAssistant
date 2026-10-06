@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Fase 3: Ruang Kerja & Keputusan PS</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .card {
+      background: #ffffff;
+      padding: 24px 32px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      zoom: 1.25;
+    }
+  </style>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'neutral',
+      flowchart: { curve: 'basis', nodeSpacing: 35, rankSpacing: 35 }
+    });
+  </script>
+</head>
+<body>
+  <div class="card">
+    <div class="mermaid">
+flowchart TD
+    classDef psNode fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
+    classDef engineNode fill:#f3e8ff,stroke:#7c3aed,stroke-width:2px,color:#5b21b6;
+    classDef decisionNode fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#b45309;
+
+    subgraph S3["Fase 3: Ruang Kerja & Keputusan PS"]
+        B3["Draf Jadwal dari Fase 2"]:::engineNode --> C1{"Apakah Perlu\nPenyesuaian?"}:::decisionNode
+        
+        C1 -- "Ya, Ada Kendala/Absen" --> C2["Tindakan Penyesuaian PS:"]:::psNode
+        C2 --> C2A["Tukar Shift dengan Rekan\n(Smart Swap: Headcount Terjaga)"]:::psNode
+        C2 --> C2B["Tukar Peran Harian\n(Kasir ⇄ Pramuniaga)"]:::psNode
+        C2 --> C2C["Tandai Izin/Sakit Mendadak\n(Rekomendasi Pengganti / Bantuan Toko Lain)"]:::psNode
+        
+        C2A --> C3["Validasi Ulang Otomatis"]:::engineNode
+        C2B --> C3
+        C2C --> C3
+        
+        C3 --> C4{"Terdapat Pelanggaran\nAturan / Kekurangan?"}:::decisionNode
+        C4 -- "Ada Deviasi Operasional" --> C5["Klik: Jadikan Catatan Operasional\n(Sistem Merangkum Alasan Deviasi)"]:::psNode
+        C4 -- "Semua Aturan Lolos" --> C6["Draf Siap Diajukan"]:::psNode
+        C5 --> C6
+        
+        C1 -- "Tidak, Hasil Cocok" --> C6
+        C6 --> C7["Halaman Konfirmasi & Kirim ke AS\n(Periksa Draf Catatan Operasional)"]:::psNode
+    end
+    </div>
+  </div>
+</body>
+</html>
